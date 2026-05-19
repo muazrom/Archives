@@ -1,0 +1,16 @@
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/chroma_data/
+backend/.env
+
+# Mac system files
+.DS_Store
+
+# Frontend
+# Note: frontend/.gitignore already covers node_modules and dist, but let's be safe
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
