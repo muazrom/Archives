@@ -1,0 +1,26 @@
+{
+  "name": "archives",
+  "version": "1.0.0",
+  "description": "Archive is a macOS desktop overlay application that completely replaces three native macOS tools — Finder, Spotlight, and the Dock — with a single, fast, keyboard-driven interface. Summon it with a hotkey, find anything on your machine semantically, browse your files, and launch apps — all without ever touching the native macOS tools.",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently --names \"backend,frontend\" --prefix-colors \"cyan,magenta\" \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && source venv/bin/activate && uvicorn src.app:app --reload --port 8000",
+    "frontend": "cd frontend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muazrom/Archives.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/muazrom/Archives/issues"
+  },
+  "homepage": "https://github.com/muazrom/Archives#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
