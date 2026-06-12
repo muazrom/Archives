@@ -1,41 +1,51 @@
-# Archive – AI-Native Unified File System & Hybrid Search Engine
+# Archive – Raycast-Style Replacement for Finder, Spotlight, and the Dock
 
-Archive is an intelligent file system that seamlessly combines local storage with web intelligence to deliver hyper-personalized information retrieval. By leveraging vector databases and modern web search APIs, it provides a unified, context-aware search experience while maintaining strict data privacy and access control.
+Archive is a macOS desktop overlay application that completely replaces three native macOS tools — Finder, Spotlight, and the Dock — with a single, fast, keyboard-driven interface. Summon it with a hotkey, find anything on your machine semantically, browse your files, and launch apps — all without ever touching the native macOS tools.
 
-## 🌟 Key Features
+## The Problem
 
-- **Hybrid Search Engine:** Query both your local files and the web simultaneously to get comprehensive answers.
-- **Semantic Retrieval:** Built on top of vector databases (ChromaDB/Milvus) to understand the *meaning* of your files, not just keyword matching.
-- **Context-Aware (Noctua):** Integrates with Noctua context to personalize results based on your current tasks and historical interactions.
-- **Privacy-First:** Local files stay local. Your private data is never sent to external servers without explicit consent.
-- **Modern Desktop Experience:** Built with Electron and React for a fast, native-feeling desktop application.
+macOS Spotlight and Finder silently fail to index files in many folders, making it impossible to find things you know exist. Managing files, launching apps, and switching windows across three separate native tools (Finder, Spotlight, Dock) adds unnecessary friction. Archive replaces all three.
 
-## 🛠️ Technology Stack
+## What Archive Replaces
 
-- **Frontend:** React, Electron, Tailwind CSS
-- **Backend:** Python (FastAPI)
-- **Vector Database:** ChromaDB / Milvus
-- **Search Intelligence:** Brave Search API / Perplexity API
+| Native macOS Tool | Archive Equivalent |
+|---|---|
+| **Spotlight** | Hotkey-triggered semantic search over your entire file system |
+| **Finder** | Built-in file browser — navigate, open, move, rename files |
+| **Dock** | Integrated app launcher and switcher — macOS Dock is hidden |
 
-## 🚀 Getting Started
+## How It Works
 
-### Prerequisites
-- Node.js (v18+)
-- Python (3.10+)
+- Press a hotkey (e.g. `⌘ Space` or custom) → Archive overlay appears
+- Type to search files semantically ("Q3 report", "passport scan", "logo design")
+- Browse folders inline without opening Finder
+- Launch or switch to any app from the same interface
+- Press `Esc` → overlay dismisses, you're back to work
 
-### Backend Setup
-1. Navigate to the `backend` directory.
-2. Create a virtual environment: `python -m venv venv`
-3. Activate the environment: `source venv/bin/activate` (Mac/Linux)
-4. Install dependencies: `pip install -r requirements.txt`
-5. Run the backend server: `uvicorn app:app --reload`
+## Core Features
 
-### Frontend Setup
-1. Navigate to the `frontend` directory.
-2. Install dependencies: `npm install`
-3. Start the development server: `npm run dev`
+- **Semantic Search** — understands meaning, not just filenames. Powered by local vector embeddings (ChromaDB).
+- **Full-Text Search** — searches inside PDFs, DOCX, Markdown, text files, and more.
+- **Reliable Indexing** — Archive builds and maintains its own file index, not dependent on macOS Spotlight.
+- **File Browser** — inline folder navigation replacing Finder.
+- **App Launcher** — find and launch any installed app; replaces the Dock entirely.
+- **Privacy-First** — fully local, no internet required, no data leaves your machine.
 
-## 📁 Project Structure
+## Technology Stack
 
-- `/backend` - Python server handling vector embeddings, file parsing, and search APIs.
-- `/frontend` - React/Electron application for the user interface.
+- **Frontend:** Electron + React (frameless overlay window)
+- **Backend:** Python (FastAPI) — file indexing, embeddings, search
+- **Vector Search:** ChromaDB (semantic/meaning-based search)
+- **Full-Text Search:** SQLite FTS5
+- **File Parsing:** PDFs, DOCX, Markdown, plain text
+
+## Project Structure
+
+```
+/frontend   – Electron + React overlay UI
+/backend    – FastAPI server (indexer, embeddings, search engine)
+```
+
+## Status
+
+Early development. Starting with the core indexing + search pipeline.

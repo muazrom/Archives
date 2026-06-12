@@ -1,49 +1,63 @@
-import { app, BrowserWindow } from 'electron';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
+const { app, BrowserWindow, globalShortcut, ipcMain } = require('electron')
+const path = require('path')
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const isDev = process.env.NODE_ENV === 'development'
+
+let win
 
 function createWindow() {
-  const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+  win = new BrowserWindow({
+    width: 680,
+    height: 480,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: true,
+    vibrancy: 'under-window',
+    visualEffectState: 'active',
+    skipTaskbar: true,
+    resizable: false,
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: true,
+      nodeIntegration: false,
     },
-    titleBarStyle: 'hiddenInset', // Gives it that native macOS look
-    backgroundColor: '#111827' // Matches our tailwind bg-gray-900/950
-  });
+  })
 
-  // If we are in development mode, load from the Vite dev server
-  const isDev = process.env.NODE_ENV === 'development';
-  
   if (isDev) {
-    // Note: This port must match the one we set in vite.config.js
-    mainWindow.loadURL('http://localhost:3005');
-    // Open DevTools automatically in dev mode
-    mainWindow.webContents.openDevTools();
+    win.loadURL('http://localhost:5173')
   } else {
-    // In production, load the built index.html
-    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+    win.loadFile(path.join(__dirname, '../dist/index.html'))
+  }
+
+  win.on('blur', () => {
+    win.hide()
+  })
+}
+
+function toggleWindow() {
+  if (!win) return
+  if (win.isVisible()) {
+    win.hide()
+  } else {
+    win.center()
+    win.show()
+    win.focus()
   }
 }
 
 app.whenReady().then(() => {
-  createWindow();
+  createWindow()
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
-});
+  globalShortcut.register('CommandOrControl+Space', toggleWindow)
+
+  ipcMain.on('hide-window', () => win.hide())
+})
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll()
+})
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+  if (process.platform !== 'darwin') app.quit()
+})

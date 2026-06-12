@@ -1,16 +1,20 @@
-# Backend
+# Python
 backend/venv/
 backend/__pycache__/
+backend/src/__pycache__/
 backend/*.pyc
 backend/chroma_data/
 backend/.env
 
-# Mac system files
-.DS_Store
-
-# Frontend
-# Note: frontend/.gitignore already covers node_modules and dist, but let's be safe
+# Node
 frontend/node_modules/
 frontend/dist/
 frontend/.env
-frontend/.env.*
+
+# macOS
+.DS_Store
+*.DS_Store
+
+# Electron
+frontend/out/
+frontend/release/
