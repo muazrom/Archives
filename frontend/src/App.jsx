@@ -28,7 +28,7 @@ export default function App() {
       return
     }
     try {
-      const res = await fetch(`http://localhost:8000/search?q=${encodeURIComponent(value)}`)
+      const res = await fetch(`http://localhost:8001/search?q=${encodeURIComponent(value)}`)
       const data = await res.json()
       setResults(data.results || [])
     } catch {

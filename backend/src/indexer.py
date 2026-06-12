@@ -15,8 +15,10 @@ SKIP_DIRS = {'.git', 'node_modules', '__pycache__', 'venv', '.venv', 'Library'}
 
 SUPPORTED_EXTENSIONS = {'.txt', '.md', '.pdf', '.docx', '.py', '.js', '.ts', '.jsx', '.tsx', '.json', '.csv'}
 
+CHROMA_PATH = os.path.join(os.path.dirname(__file__), '..', 'chroma_data')
+
 model = SentenceTransformer('all-MiniLM-L6-v2')
-client = chromadb.PersistentClient(path="./chroma_data")
+client = chromadb.PersistentClient(path=CHROMA_PATH)
 collection = client.get_or_create_collection("files")
 
 

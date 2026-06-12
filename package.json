@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently --names \"backend,frontend\" --prefix-colors \"cyan,magenta\" \"npm run backend\" \"npm run frontend\"",
-    "backend": "cd backend && source venv/bin/activate && uvicorn src.app:app --reload --port 8000",
+    "backend": "cd backend && source venv/bin/activate && uvicorn src.app:app --reload --port 8001",
     "frontend": "cd frontend && npm start"
   },
   "repository": {
